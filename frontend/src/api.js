@@ -1,4 +1,4 @@
-const BASE_URL = '/api';
+const BASE_URL = 'https://backoffice-api-124694774745.europe-west1.run.app/api';
 
 function getToken() {
   return localStorage.getItem('token');
