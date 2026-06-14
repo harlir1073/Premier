@@ -28,7 +28,7 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-cloud">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="font-display text-3xl text-ink">Voyager</div>
+          <div className="font-display text-3xl text-ink">PREMIER TOURS</div>
           <div className="label-eyebrow mt-1">Travel Back Office</div>
         </div>
 

@@ -18,7 +18,7 @@ export default function Sidebar() {
   return (
     <aside className="w-60 bg-ink text-cloud flex flex-col h-screen sticky top-0">
       <div className="px-6 py-6 border-b border-slate/40">
-        <div className="font-display text-xl tracking-tight">Voyager</div>
+        <div className="font-display text-xl tracking-tight">PREMIER TOURS</div>
         <div className="label-eyebrow text-mist mt-1">Back Office</div>
       </div>
 
