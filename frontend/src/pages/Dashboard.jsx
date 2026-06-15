@@ -29,7 +29,7 @@ export default function Dashboard() {
   const supplierTotal = supplierOutstanding.reduce((s, r) => s + parseFloat(r.supplier_price), 0);
 
   return (
-    <div className="p-8 space-y-8">
+    <div className="p-4 sm:p-8 space-y-8">
       <div>
         <div className="label-eyebrow mb-1">Welcome back</div>
         <h1 className="font-display text-3xl">{user?.full_name}</h1>

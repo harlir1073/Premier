@@ -32,14 +32,14 @@ export default function ReservationDetail() {
     load();
   }
 
-  if (!reservation) return <div className="p-8 text-mist">Loading…</div>;
+  if (!reservation) return <div className="p-4 sm:p-8 text-mist">Loading…</div>;
 
   const totalAgent = reservation.items.reduce((s, i) => s + parseFloat(i.agent_price), 0);
   const totalSupplier = reservation.items.reduce((s, i) => s + parseFloat(i.supplier_price), 0);
 
   return (
-    <div className="p-8 space-y-6 max-w-4xl">
-      <div className="flex items-center justify-between">
+    <div className="p-4 sm:p-8 space-y-6 max-w-4xl">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="label-eyebrow mb-1">Reservation</div>
           <h1 className="font-display text-3xl">{reservation.booking_reference}</h1>
@@ -52,7 +52,7 @@ export default function ReservationDetail() {
         </span>
       </div>
 
-      <div className="bg-paper border border-slate/10 rounded-lg p-5 grid grid-cols-3 gap-4 text-sm">
+      <div className="bg-paper border border-slate/10 rounded-lg p-5 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
         <div>
           <div className="label-eyebrow mb-1">Lead passenger</div>
           <div>{reservation.lead_passenger_name}</div>
@@ -76,7 +76,7 @@ export default function ReservationDetail() {
       <div className="space-y-3">
         <h2 className="font-display text-xl">Products</h2>
         {reservation.items.map(item => (
-          <div key={item.id} className="bg-paper border border-slate/10 rounded-lg p-5 grid grid-cols-3 gap-4 text-sm">
+          <div key={item.id} className="bg-paper border border-slate/10 rounded-lg p-5 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
             <div className="col-span-3 flex items-center justify-between">
               <div>
                 <span className="font-medium capitalize">{item.product_type}</span>
@@ -126,7 +126,7 @@ export default function ReservationDetail() {
         ))}
       </div>
 
-      <div className="bg-paper border border-slate/10 rounded-lg p-5 grid grid-cols-3 gap-4 text-sm">
+      <div className="bg-paper border border-slate/10 rounded-lg p-5 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
         <div>
           <div className="label-eyebrow mb-1">Total agent price</div>
           <div className="font-display text-xl">{totalAgent.toLocaleString()}</div>

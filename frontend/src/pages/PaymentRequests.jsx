@@ -59,7 +59,7 @@ export default function PaymentRequests() {
   }
 
   return (
-    <div className="p-8 space-y-8 max-w-4xl">
+    <div className="p-4 sm:p-8 space-y-8 max-w-4xl">
       <div>
         <div className="label-eyebrow mb-1">Billing</div>
         <h1 className="font-display text-3xl">Payment Requests</h1>
@@ -69,7 +69,7 @@ export default function PaymentRequests() {
       {can('payment_requests', 'create') && (
         <form onSubmit={handleCreate} className="bg-paper border border-slate/10 rounded-lg p-5 space-y-4">
           <h2 className="font-display text-lg">Create new request</h2>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="label-eyebrow block mb-1">Agent</label>
               <select required value={agentId} onChange={e => { setAgentId(e.target.value); setSelected([]); }}
@@ -112,8 +112,8 @@ export default function PaymentRequests() {
         </form>
       )}
 
-      <div className="bg-paper rounded-lg border border-slate/10 overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="bg-paper rounded-lg border border-slate/10 overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px]">
           <thead className="bg-cloud text-left">
             <tr>
               <th className="px-4 py-3 label-eyebrow">Request #</th>

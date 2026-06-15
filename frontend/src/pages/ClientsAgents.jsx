@@ -40,8 +40,8 @@ export default function ClientsAgents() {
   }
 
   return (
-    <div className="p-8 space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="p-4 sm:p-8 space-y-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="label-eyebrow mb-1">Master data</div>
           <h1 className="font-display text-3xl">Clients & Agents</h1>
@@ -56,12 +56,12 @@ export default function ClientsAgents() {
         )}
       </div>
 
-      <div className="flex gap-3">
+      <div className="flex flex-col sm:flex-row gap-3">
         <input
           placeholder="Search by name…"
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="border border-slate/20 rounded px-3 py-2 text-sm flex-1 max-w-xs focus:outline-none focus:ring-2 focus:ring-slate"
+          className="border border-slate/20 rounded px-3 py-2 text-sm w-full sm:flex-1 sm:max-w-xs focus:outline-none focus:ring-2 focus:ring-slate"
         />
         <select
           value={typeFilter}
@@ -75,7 +75,7 @@ export default function ClientsAgents() {
       </div>
 
       {showForm && (
-        <form onSubmit={handleSubmit} className="bg-paper border border-slate/10 rounded-lg p-5 grid grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="bg-paper border border-slate/10 rounded-lg p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="label-eyebrow block mb-1">Type</label>
             <select
@@ -138,8 +138,8 @@ export default function ClientsAgents() {
         </form>
       )}
 
-      <div className="bg-paper rounded-lg border border-slate/10 overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="bg-paper rounded-lg border border-slate/10 overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px]">
           <thead className="bg-cloud text-left">
             <tr>
               <th className="px-4 py-3 label-eyebrow">Name</th>

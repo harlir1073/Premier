@@ -65,14 +65,14 @@ export default function ReservationNew() {
   }
 
   return (
-    <div className="p-8 space-y-6 max-w-4xl">
+    <div className="p-4 sm:p-8 space-y-6 max-w-4xl">
       <div>
         <div className="label-eyebrow mb-1">Bookings</div>
         <h1 className="font-display text-3xl">New reservation</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-paper border border-slate/10 rounded-lg p-5 grid grid-cols-2 gap-4">
+        <div className="bg-paper border border-slate/10 rounded-lg p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="label-eyebrow block mb-1">Agent</label>
             <select value={agentId} onChange={e => setAgentId(e.target.value)}
@@ -99,13 +99,13 @@ export default function ReservationNew() {
         </div>
 
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="font-display text-xl">Products</h2>
             <button type="button" onClick={addItem} className="text-sm text-slate hover:underline">+ Add product line</button>
           </div>
 
           {items.map((item, i) => (
-            <div key={i} className="bg-paper border border-slate/10 rounded-lg p-5 grid grid-cols-4 gap-4 relative">
+            <div key={i} className="bg-paper border border-slate/10 rounded-lg p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative">
               {items.length > 1 && (
                 <button type="button" onClick={() => removeItem(i)}
                   className="absolute top-3 right-3 text-coral text-xs hover:underline">Remove</button>

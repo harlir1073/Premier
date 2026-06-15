@@ -38,8 +38,8 @@ export default function Users() {
   }
 
   return (
-    <div className="p-8 space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="p-4 sm:p-8 space-y-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="label-eyebrow mb-1">Administration</div>
           <h1 className="font-display text-3xl">Users</h1>
@@ -52,7 +52,7 @@ export default function Users() {
       </div>
 
       {showForm && (
-        <form onSubmit={handleSubmit} className="bg-paper border border-slate/10 rounded-lg p-5 grid grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="bg-paper border border-slate/10 rounded-lg p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="label-eyebrow block mb-1">Full name</label>
             <input required value={form.full_name} onChange={e => setForm({ ...form, full_name: e.target.value })}
@@ -85,8 +85,8 @@ export default function Users() {
         </form>
       )}
 
-      <div className="bg-paper rounded-lg border border-slate/10 overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="bg-paper rounded-lg border border-slate/10 overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px]">
           <thead className="bg-cloud text-left">
             <tr>
               <th className="px-4 py-3 label-eyebrow">Name</th>

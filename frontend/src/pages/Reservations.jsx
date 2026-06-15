@@ -21,8 +21,8 @@ export default function Reservations() {
   }, [status]);
 
   return (
-    <div className="p-8 space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="p-4 sm:p-8 space-y-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="label-eyebrow mb-1">Bookings</div>
           <h1 className="font-display text-3xl">Reservations</h1>
@@ -42,8 +42,8 @@ export default function Reservations() {
         <option value="cancelled">Cancelled</option>
       </select>
 
-      <div className="bg-paper rounded-lg border border-slate/10 overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="bg-paper rounded-lg border border-slate/10 overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px]">
           <thead className="bg-cloud text-left">
             <tr>
               <th className="px-4 py-3 label-eyebrow">Reference</th>
