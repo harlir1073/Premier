@@ -59,28 +59,52 @@ router.put('/items/:id', requirePermission('reservations', 'edit'), async (req, 
 
   const result = await pool.query(
     `UPDATE reservation_items SET
-       product_type = COALESCE($1, product_type),
-       supplier_id = $2,
-       description = $3,
-       start_date = $4,
-       end_date = $5,
-       agent_price = COALESCE($6, agent_price),
-       agent_currency = COALESCE($7, agent_currency),
-       agent_payment_due_date = $8,
-       agent_payment_status = COALESCE($9, agent_payment_status),
-       agent_paid_date = $10,
-       supplier_price = COALESCE($11, supplier_price),
-       supplier_currency = COALESCE($12, supplier_currency),
-       supplier_payment_due_date = $13,
-       supplier_payment_status = COALESCE($14, supplier_payment_status),
-       supplier_paid_date = $15,
-       status = COALESCE($16, status)
-     WHERE id = $17 RETURNING *`,
+        product_type               = COALESCE($1, product_type),
+        supplier_id                = $2,
+        description                = $3,
+        start_date                 = $4,
+        end_date                   = $5,
+        agent_price                = COALESCE($6, agent_price),
+        agent_currency             = COALESCE($7, agent_currency),
+        agent_payment_due_date     = $8,
+        agent_payment_status       = COALESCE($9, agent_payment_status),
+        agent_paid_date            = $10,
+        supplier_price             = COALESCE($11, supplier_price),
+        supplier_currency          = COALESCE($12, supplier_currency),
+        supplier_payment_due_date  = $13,
+        supplier_payment_status    = COALESCE($14, supplier_payment_status),
+        supplier_paid_date         = $15,
+        status                     = COALESCE($16, status),
+        booking_item_reference     = $17,
+        supplier_ref               = $18,
+        agency_reference           = $19,
+        source                     = $20,
+        platform                   = $21,
+        inventory_type             = $22,
+        availability               = $23,
+        cancellation_deadline      = $24,
+        city                       = $25,
+        service_name               = $26,
+        hotel_confirmation         = $27,
+        remarks                    = $28,
+        agent_profile              = $29,
+        supplier_prepayment        = $30,
+        agent_prepayment           = $31,
+        passenger_name             = $32
+     WHERE id = $33 RETURNING *`,
     [
       f.product_type, f.supplier_id, f.description, f.start_date, f.end_date,
-      f.agent_price, f.agent_currency, f.agent_payment_due_date, f.agent_payment_status, f.agent_paid_date,
-      f.supplier_price, f.supplier_currency, f.supplier_payment_due_date, f.supplier_payment_status, f.supplier_paid_date,
-      f.status, req.params.id
+      f.agent_price, f.agent_currency, f.agent_payment_due_date,
+      f.agent_payment_status, f.agent_paid_date,
+      f.supplier_price, f.supplier_currency, f.supplier_payment_due_date,
+      f.supplier_payment_status, f.supplier_paid_date,
+      f.status,
+      f.booking_item_reference, f.supplier_ref, f.agency_reference,
+      f.source, f.platform, f.inventory_type, f.availability,
+      f.cancellation_deadline, f.city, f.service_name, f.hotel_confirmation,
+      f.remarks, f.agent_profile, f.supplier_prepayment, f.agent_prepayment,
+      f.passenger_name,
+      req.params.id
     ]
   );
 
@@ -138,13 +162,25 @@ router.post('/', requirePermission('reservations', 'create'), async (req, res) =
           `INSERT INTO reservation_items
             (reservation_id, product_type, supplier_id, description, start_date, end_date,
              agent_price, agent_currency, agent_payment_due_date,
-             supplier_price, supplier_currency, supplier_payment_due_date)
-           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *`,
+             supplier_price, supplier_currency, supplier_payment_due_date,
+             booking_item_reference, supplier_ref, agency_reference,
+             source, platform, inventory_type, availability,
+             cancellation_deadline, city, service_name, hotel_confirmation,
+             remarks, agent_profile, supplier_prepayment, agent_prepayment,
+             passenger_name)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28)
+           RETURNING *`,
           [
-            reservation.id, item.product_type, item.supplier_id, item.description,
+            reservation.id,
+            item.product_type, item.supplier_id, item.description,
             item.start_date, item.end_date,
             item.agent_price || 0, item.agent_currency || 'USD', item.agent_payment_due_date,
-            item.supplier_price || 0, item.supplier_currency || 'USD', item.supplier_payment_due_date
+            item.supplier_price || 0, item.supplier_currency || 'USD', item.supplier_payment_due_date,
+            item.booking_item_reference, item.supplier_ref, item.agency_reference,
+            item.source, item.platform, item.inventory_type, item.availability,
+            item.cancellation_deadline, item.city, item.service_name, item.hotel_confirmation,
+            item.remarks, item.agent_profile, item.supplier_prepayment, item.agent_prepayment,
+            item.passenger_name
           ]
         );
         insertedItems.push(itemResult.rows[0]);
@@ -168,12 +204,12 @@ router.put('/:id', requirePermission('reservations', 'edit'), async (req, res) =
 
   const result = await pool.query(
     `UPDATE reservations SET
-       agent_id = COALESCE($1, agent_id),
-       lead_passenger_name = COALESCE($2, lead_passenger_name),
-       passenger_count = COALESCE($3, passenger_count),
-       status = COALESCE($4, status),
-       notes = $5,
-       updated_at = now()
+        agent_id           = COALESCE($1, agent_id),
+        lead_passenger_name = COALESCE($2, lead_passenger_name),
+        passenger_count    = COALESCE($3, passenger_count),
+        status             = COALESCE($4, status),
+        notes              = $5,
+        updated_at         = now()
      WHERE id = $6 RETURNING *`,
     [agent_id, lead_passenger_name, passenger_count, status, notes, req.params.id]
   );
@@ -190,13 +226,25 @@ router.post('/:id/items', requirePermission('reservations', 'edit'), async (req,
     `INSERT INTO reservation_items
       (reservation_id, product_type, supplier_id, description, start_date, end_date,
        agent_price, agent_currency, agent_payment_due_date,
-       supplier_price, supplier_currency, supplier_payment_due_date)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *`,
+       supplier_price, supplier_currency, supplier_payment_due_date,
+       booking_item_reference, supplier_ref, agency_reference,
+       source, platform, inventory_type, availability,
+       cancellation_deadline, city, service_name, hotel_confirmation,
+       remarks, agent_profile, supplier_prepayment, agent_prepayment,
+       passenger_name)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28)
+     RETURNING *`,
     [
-      req.params.id, item.product_type, item.supplier_id, item.description,
+      req.params.id,
+      item.product_type, item.supplier_id, item.description,
       item.start_date, item.end_date,
       item.agent_price || 0, item.agent_currency || 'USD', item.agent_payment_due_date,
-      item.supplier_price || 0, item.supplier_currency || 'USD', item.supplier_payment_due_date
+      item.supplier_price || 0, item.supplier_currency || 'USD', item.supplier_payment_due_date,
+      item.booking_item_reference, item.supplier_ref, item.agency_reference,
+      item.source, item.platform, item.inventory_type, item.availability,
+      item.cancellation_deadline, item.city, item.service_name, item.hotel_confirmation,
+      item.remarks, item.agent_profile, item.supplier_prepayment, item.agent_prepayment,
+      item.passenger_name
     ]
   );
 
